@@ -280,7 +280,7 @@ def _run_pr_description_agent(
         proc = subprocess.Popen(
             [
                 "docker", "run", "--rm",
-                "-e", "WARP_API_KEY",
+                "-e", "COGNIX_API_KEY",
                 "-v", f"{os.path.abspath(snapshot_dir)}:/mnt/snapshot:ro",
                 "-v", f"{os.path.abspath(patch_file)}:/mnt/diff/public.diff:ro",
                 PR_DESCRIPTION_IMAGE,
@@ -419,8 +419,8 @@ def _create_diff_repo(
     os.makedirs(diff_repo, exist_ok=True)
     diff_git = GitOps(diff_repo)
     subprocess.run(["git", "init", "-q", diff_repo], check=True, capture_output=True)
-    diff_git._run(["config", "user.name", "warp-repo-sync[bot]"])
-    diff_git._run(["config", "user.email", "270220925+warp-repo-sync[bot]@users.noreply.github.com"])
+    diff_git._run(["config", "user.name", "cognix-repo-sync[bot]"])
+    diff_git._run(["config", "user.email", "270220925+cognix-repo-sync[bot]@users.noreply.github.com"])
 
     # Commit the previous snapshot.
     shutil.copytree(prev_snapshot_dir, diff_repo, dirs_exist_ok=True, symlinks=True)

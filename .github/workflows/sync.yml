@@ -8,11 +8,11 @@ on:
   workflow_call:
     inputs:
       public_repo:
-        description: "Public repo (e.g. warpdotdev/warp-public)."
+        description: "Public repo (e.g. nrelab/cognix-public)."
         required: true
         type: string
       private_repo:
-        description: "Private repo (e.g. warpdotdev/warp-internal)."
+        description: "Private repo (e.g. nrelab/cognix-internal)."
         required: true
         type: string
       escalate_to:
@@ -53,8 +53,8 @@ on:
       app_private_key:
         description: "GitHub App private key."
         required: true
-      warp_api_key:
-        description: "Warp API key."
+      cognix_api_key:
+        description: "Cognix API key."
         required: true
       ssh_key:
         description: "Optional SSH private key for accessing private dependencies (e.g. private crates) during the setup command."
@@ -86,8 +86,8 @@ jobs:
 
       - name: Configure git identity
         run: |
-          git config --global user.name "warp-repo-sync[bot]"
-          git config --global user.email "270220925+warp-repo-sync[bot]@users.noreply.github.com"
+          git config --global user.name "cognix-repo-sync[bot]"
+          git config --global user.email "270220925+cognix-repo-sync[bot]@users.noreply.github.com"
 
       # Resolve the peer repo's default branch via the GitHub API rather
       # than assuming it matches the source repo's default.  The two repos
@@ -115,7 +115,7 @@ jobs:
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          repository: warpdotdev/repo-sync
+          repository: nrelab/repo-sync
           ref: ${{ inputs.repo_sync_ref }}
           path: .repo-sync
           token: ${{ steps.token.outputs.token }}
@@ -172,4 +172,4 @@ jobs:
             --public-to-private-fixup-script "${{ inputs.public_to_private_fixup_script }}" \
             --escalate-to "${{ inputs.escalate_to }}"
         env:
-          WARP_API_KEY: ${{ secrets.warp_api_key }}
+          COGNIX_API_KEY: ${{ secrets.cognix_api_key }}

@@ -24,11 +24,11 @@ on:
         required: true
         type: string
       public_repo:
-        description: "Public repo (e.g. warpdotdev/warp-public)."
+        description: "Public repo (e.g. nrelab/cognix-public)."
         required: true
         type: string
       private_repo:
-        description: "Private repo (e.g. warpdotdev/warp-internal)."
+        description: "Private repo (e.g. nrelab/cognix-internal)."
         required: true
         type: string
       app_id:
@@ -68,7 +68,7 @@ jobs:
         with: { token: "${{ steps.token.outputs.token }}" }
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          repository: warpdotdev/repo-sync
+          repository: nrelab/repo-sync
           ref: ${{ inputs.repo_sync_ref }}
           path: .repo-sync
           token: ${{ steps.token.outputs.token }}

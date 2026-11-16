@@ -6,7 +6,7 @@ manual integration test procedures for validating repo-sync against real GitHub 
 
 ### 1. create test repositories
 
-create two repos in the `warpdotdev` org (or your test org):
+create two repos in the `nrelab` org (or your test org):
 - `repo-sync-test-private` -- the private repo
 - `repo-sync-test-public` -- the public repo (create it empty, no README)
 
@@ -35,7 +35,7 @@ alternatively, for quick testing, create a fine-grained PAT with the same permis
 clone `repo-sync-test-private` and add some test content:
 
 ```sh
-git clone git@github.com:warpdotdev/repo-sync-test-private.git
+git clone git@github.com:nrelab/repo-sync-test-private.git
 cd repo-sync-test-private
 
 # public file.
@@ -87,30 +87,30 @@ on:
 jobs:
   sync:
     if: inputs.action == 'sync'
-    uses: warpdotdev/repo-sync/.github/workflows/sync.yml@david/integration
+    uses: nrelab/repo-sync/.github/workflows/sync.yml@david/integration
     with:
-      public_repo: warpdotdev/repo-sync-test-public
-      private_repo: warpdotdev/repo-sync-test-private
+      public_repo: nrelab/repo-sync-test-public
+      private_repo: nrelab/repo-sync-test-private
     secrets:
       auth_token: ${{ secrets.REPO_SYNC_TOKEN }}
 
   restack:
     if: inputs.action == 'restack'
-    uses: warpdotdev/repo-sync/.github/workflows/restack.yml@david/integration
+    uses: nrelab/repo-sync/.github/workflows/restack.yml@david/integration
     with:
-      public_repo: warpdotdev/repo-sync-test-public
-      private_repo: warpdotdev/repo-sync-test-private
+      public_repo: nrelab/repo-sync-test-public
+      private_repo: nrelab/repo-sync-test-private
     secrets:
       auth_token: ${{ secrets.REPO_SYNC_TOKEN }}
 
   escalation:
     if: inputs.action == 'escalation'
-    uses: warpdotdev/repo-sync/.github/workflows/escalation.yml@david/integration
+    uses: nrelab/repo-sync/.github/workflows/escalation.yml@david/integration
     with:
       escalate_to: "@oncall-client-primary"
       escalate_after: "5m"
-      public_repo: warpdotdev/repo-sync-test-public
-      private_repo: warpdotdev/repo-sync-test-private
+      public_repo: nrelab/repo-sync-test-public
+      private_repo: nrelab/repo-sync-test-private
     secrets:
       auth_token: ${{ secrets.REPO_SYNC_TOKEN }}
 ```
@@ -128,15 +128,15 @@ note: use `@david/integration` as the ref (not `@v1`) to test the current branch
    ```sh
    cd repo-sync-test-private
    /path/to/repo-sync/scripts/bootstrap.sh \
-     --private-repo warpdotdev/repo-sync-test-private \
-     --public-repo warpdotdev/repo-sync-test-public \
+     --private-repo nrelab/repo-sync-test-private \
+     --public-repo nrelab/repo-sync-test-public \
      --token "$GITHUB_TOKEN"
    ```
 2. verify the script completes without error.
 
 **check:**
 - [ ] `repo-sync-test-public` has exactly one commit
-- [ ] the commit message contains `Repo-Sync-Origin: warpdotdev/repo-sync-test-private@<sha>`
+- [ ] the commit message contains `Repo-Sync-Origin: nrelab/repo-sync-test-private@<sha>`
 - [ ] `public.txt` exists with content `public content`
 - [ ] `mixed.txt` exists with only the public lines (no `secret line`, no markers)
 - [ ] `private/` directory does not exist
@@ -407,7 +407,7 @@ note: use `@david/integration` as the ref (not `@v1`) to test the current branch
        runs-on: ubuntu-latest
        steps:
          - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-         - uses: warpdotdev/repo-sync/actions/validate-markers@david/integration
+         - uses: nrelab/repo-sync/actions/validate-markers@david/integration
    ```
 2. open a PR with a malformed marker (e.g., `private-start` without `private-end`).
 3. open a PR with correctly paired markers.

@@ -263,26 +263,26 @@ class TestPublicToPrivateFromPR:
 
     def test_title_matches_source_pr(self) -> None:
         desc = public_to_private_from_pr(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             source_pr_title="Fix typo in README",
             source_pr_body="Fixed a small typo.",
-            source_pr_url="https://github.com/warpdotdev/warp-public/pull/42",
+            source_pr_url="https://github.com/nrelab/cognix-public/pull/42",
         )
         assert desc.title == "Fix typo in README"
 
     def test_body_has_synced_from_header(self) -> None:
         desc = public_to_private_from_pr(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             source_pr_title="Fix typo",
             source_pr_body="Fixed a typo.",
-            source_pr_url="https://github.com/warpdotdev/warp-public/pull/42",
+            source_pr_url="https://github.com/nrelab/cognix-public/pull/42",
         )
-        assert desc.body.startswith("Synced from warp-public:")
+        assert desc.body.startswith("Synced from cognix-public:")
 
     def test_body_includes_source_url(self) -> None:
-        url = "https://github.com/warpdotdev/warp-public/pull/42"
+        url = "https://github.com/nrelab/cognix-public/pull/42"
         desc = public_to_private_from_pr(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             source_pr_title="Fix typo",
             source_pr_body="Body text.",
             source_pr_url=url,
@@ -291,10 +291,10 @@ class TestPublicToPrivateFromPR:
 
     def test_body_includes_source_body(self) -> None:
         desc = public_to_private_from_pr(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             source_pr_title="Fix typo",
             source_pr_body="The original PR body.",
-            source_pr_url="https://github.com/warpdotdev/warp-public/pull/42",
+            source_pr_url="https://github.com/nrelab/cognix-public/pull/42",
         )
         assert "The original PR body." in desc.body
 
@@ -304,26 +304,26 @@ class TestPublicToPrivateFromCommit:
 
     def test_title_matches_commit_subject(self) -> None:
         desc = public_to_private_from_commit(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             commit_subject="Update config",
             commit_body="",
-            commit_url="https://github.com/warpdotdev/warp-public/commit/abc123",
+            commit_url="https://github.com/nrelab/cognix-public/commit/abc123",
         )
         assert desc.title == "Update config"
 
     def test_body_has_synced_from_header(self) -> None:
         desc = public_to_private_from_commit(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             commit_subject="Update config",
             commit_body="",
-            commit_url="https://github.com/warpdotdev/warp-public/commit/abc123",
+            commit_url="https://github.com/nrelab/cognix-public/commit/abc123",
         )
-        assert desc.body.startswith("Synced from warp-public:")
+        assert desc.body.startswith("Synced from cognix-public:")
 
     def test_body_includes_commit_url(self) -> None:
-        url = "https://github.com/warpdotdev/warp-public/commit/abc123"
+        url = "https://github.com/nrelab/cognix-public/commit/abc123"
         desc = public_to_private_from_commit(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             commit_subject="Update",
             commit_body="",
             commit_url=url,
@@ -332,19 +332,19 @@ class TestPublicToPrivateFromCommit:
 
     def test_body_includes_commit_body_when_present(self) -> None:
         desc = public_to_private_from_commit(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             commit_subject="Update",
             commit_body="Detailed description of changes.",
-            commit_url="https://github.com/warpdotdev/warp-public/commit/abc123",
+            commit_url="https://github.com/nrelab/cognix-public/commit/abc123",
         )
         assert "Detailed description of changes." in desc.body
 
     def test_body_omits_extra_newlines_when_no_body(self) -> None:
         desc = public_to_private_from_commit(
-            source_repo_name="warp-public",
+            source_repo_name="cognix-public",
             commit_subject="Update",
             commit_body="",
-            commit_url="https://github.com/warpdotdev/warp-public/commit/abc123",
+            commit_url="https://github.com/nrelab/cognix-public/commit/abc123",
         )
         # Should not have a trailing double newline without a body.
         assert not desc.body.endswith("\n\n")

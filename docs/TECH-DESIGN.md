@@ -233,7 +233,7 @@ there are four separate reusable workflows: sync creation (triggered on push to 
 **sync creation workflow** -- triggered by consuming repo on push to default branch:
 
 inputs:
-* `peer_repo` (required) -- the counterpart repo, e.g., `warpdotdev/warp-public`
+* `peer_repo` (required) -- the counterpart repo, e.g., `nrelab/cognix-public`
 * `peer_default_branch` (required) -- e.g., `main`
 * `source_is_private` (required, boolean) -- if `true`, the workflow strips private code before syncing
 * `escalate_to` (optional) -- GitHub team or user to escalate to on timeout.  defaults to `@oncall-client-primary`
@@ -293,9 +293,9 @@ on:
     branches: [main]
 jobs:
   sync:
-    uses: warpdotdev/repo-sync/.github/workflows/sync.yml@v1
+    uses: nrelab/repo-sync/.github/workflows/sync.yml@v1
     with:
-      peer_repo: warpdotdev/warp-public
+      peer_repo: nrelab/cognix-public
       peer_default_branch: main
       source_is_private: true
     secrets:
@@ -306,7 +306,7 @@ consuming repos pin to a **major version** (e.g., `@v1`) of the repo-sync workfl
 
 ## oz agent skills
 
-skills live in `.agents/skills/` in this repository.  they are invoked from the sync workflows via `oz agent run --skill warpdotdev/repo-sync:<skill-name>`, or programmatically via the [Oz Python SDK](https://github.com/warpdotdev/oz-sdk-python).
+skills live in `.agents/skills/` in this repository.  they are invoked from the sync workflows via `oz agent run --skill nrelab/repo-sync:<skill-name>`, or programmatically via the [Oz Python SDK](https://github.com/nrelab/oz-sdk-python).
 
 ### conflict resolution skill
 

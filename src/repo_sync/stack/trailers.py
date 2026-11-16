@@ -48,7 +48,7 @@ def _try_parse_origin_value(value: str) -> SyncOrigin | None:
     """Try to parse a <repo>@<sha> value string into a SyncOrigin."""
     value = value.strip()
     # Value format: <repo>@<sha>.  The repo may contain slashes
-    # (e.g. "warpdotdev/warp-internal"), so we split on the last "@".
+    # (e.g. "nrelab/cognix-internal"), so we split on the last "@".
     at_idx = value.rfind("@")
     if at_idx > 0 and at_idx < len(value) - 1:
         return SyncOrigin(repo=value[:at_idx], sha=value[at_idx + 1 :])

@@ -224,12 +224,12 @@ class TestBuildPublicToPrivateDescription:
 
         desc = build_public_to_private_description(
             source_gh=gh,
-            source_repo="warpdotdev/warp-public",
+            source_repo="nrelab/cognix-public",
             source_sha="abc123",
             commit_subject="test",
             commit_body="",
         )
-        assert "Synced from warp-public:" in desc.body
+        assert "Synced from cognix-public:" in desc.body
 
 
 class TestReadWatermarkFromPeer:
@@ -263,12 +263,12 @@ class TestReadWatermarkFromPeer:
         gh.get_tag_sha.return_value = "watermark_sha"
         gh.get_commit_message.return_value = (
             "repo-sync: sync from private\n\n"
-            "Repo-Sync-Origin: warpdotdev/warp-internal@deadbeef1234"
+            "Repo-Sync-Origin: nrelab/cognix-internal@deadbeef1234"
         )
 
         result = read_watermark_from_peer(gh, "private-to-public")
         assert result is not None
-        assert result.repo == "warpdotdev/warp-internal"
+        assert result.repo == "nrelab/cognix-internal"
         assert result.sha == "deadbeef1234"
 
     def test_uses_correct_tag_name(self) -> None:

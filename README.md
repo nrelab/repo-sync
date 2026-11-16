@@ -57,8 +57,8 @@ the bootstrap script creates the initial public repo from the private repo:
 
 ```sh
 ./scripts/bootstrap.sh \
-  --private-repo warpdotdev/warp-internal \
-  --public-repo warpdotdev/warp-public \
+  --private-repo nrelab/cognix-internal \
+  --public-repo nrelab/cognix-public \
   --token "$GITHUB_TOKEN"
 ```
 
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: warpdotdev/repo-sync/actions/validate-markers@main
+      - uses: nrelab/repo-sync/actions/validate-markers@main
 ```
 
 this validates that all `!repo-sync` markers are properly paired, not nested, that no symlinks exist in the repo, and that text Git LFS payloads do not contain repo-sync markers.
@@ -92,7 +92,7 @@ this validates that all `!repo-sync` markers are properly paired, not nested, th
 to validate only selected paths, pass `paths` as a JSON array so file names containing spaces or shell metacharacters are preserved exactly:
 
 ```yaml
-- uses: warpdotdev/repo-sync/actions/validate-markers@main
+- uses: nrelab/repo-sync/actions/validate-markers@main
   with:
     paths: '["src/file with spaces.txt", "assets/*.bin"]'
 ```
@@ -119,10 +119,10 @@ on:
 jobs:
   sync:
     if: github.event_name == 'push'
-    uses: warpdotdev/repo-sync/.github/workflows/sync.yml@main
+    uses: nrelab/repo-sync/.github/workflows/sync.yml@main
     with:
-      public_repo: warpdotdev/warp-public
-      private_repo: warpdotdev/warp-internal
+      public_repo: nrelab/cognix-public
+      private_repo: nrelab/cognix-internal
       app_id: ${{ vars.REPO_SYNC_APP_ID }}
     secrets:
       app_private_key: ${{ secrets.REPO_SYNC_APP_PRIVATE_KEY }}
@@ -131,32 +131,32 @@ jobs:
     if: >-
       (github.event_name == 'pull_request' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'repo-sync/')) ||
       (github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'repo-sync:needs-restack' && startsWith(github.event.pull_request.head.ref, 'repo-sync/'))
-    uses: warpdotdev/repo-sync/.github/workflows/restack.yml@main
+    uses: nrelab/repo-sync/.github/workflows/restack.yml@main
     with:
-      public_repo: warpdotdev/warp-public
-      private_repo: warpdotdev/warp-internal
+      public_repo: nrelab/cognix-public
+      private_repo: nrelab/cognix-internal
       app_id: ${{ vars.REPO_SYNC_APP_ID }}
     secrets:
       app_private_key: ${{ secrets.REPO_SYNC_APP_PRIVATE_KEY }}
 
   approve:
     if: github.event_name == 'pull_request' && github.event.action != 'closed' && startsWith(github.event.pull_request.head.ref, 'repo-sync/')
-    uses: warpdotdev/repo-sync/.github/workflows/approve.yml@main
+    uses: nrelab/repo-sync/.github/workflows/approve.yml@main
     with:
-      public_repo: warpdotdev/warp-public
-      private_repo: warpdotdev/warp-internal
+      public_repo: nrelab/cognix-public
+      private_repo: nrelab/cognix-internal
       approver_app_id: ${{ vars.REPO_SYNC_APPROVER_APP_ID }}
     secrets:
       approver_app_private_key: ${{ secrets.REPO_SYNC_APPROVER_APP_PRIVATE_KEY }}
 
   escalation:
     if: github.event_name == 'schedule'
-    uses: warpdotdev/repo-sync/.github/workflows/escalation.yml@main
+    uses: nrelab/repo-sync/.github/workflows/escalation.yml@main
     with:
       escalate_to: "@oncall-client-primary"
       escalate_after: "1h"
-      public_repo: warpdotdev/warp-public
-      private_repo: warpdotdev/warp-internal
+      public_repo: nrelab/cognix-public
+      private_repo: nrelab/cognix-internal
       app_id: ${{ vars.REPO_SYNC_APP_ID }}
     secrets:
       app_private_key: ${{ secrets.REPO_SYNC_APP_PRIVATE_KEY }}
@@ -219,10 +219,10 @@ fixup scripts are configured per-direction via workflow inputs:
 
 ```yaml
 sync:
-  uses: warpdotdev/repo-sync/.github/workflows/sync.yml@main
+  uses: nrelab/repo-sync/.github/workflows/sync.yml@main
   with:
-    public_repo: warpdotdev/warp-public
-    private_repo: warpdotdev/warp-internal
+    public_repo: nrelab/cognix-public
+    private_repo: nrelab/cognix-internal
     app_id: ${{ vars.REPO_SYNC_APP_ID }}
     private_to_public_fixup_script: scripts/post-strip-fixup.sh
   secrets:

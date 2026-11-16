@@ -28,7 +28,7 @@ class TestIsSyncOriginated:
         git = MagicMock(spec=GitOps)
         git.commit_message.return_value = (
             "repo-sync: sync from private\n\n"
-            "Repo-Sync-Origin: warpdotdev/warp-internal@abc123"
+            "Repo-Sync-Origin: nrelab/cognix-internal@abc123"
         )
 
         gh = MagicMock(spec=GhOps)
@@ -50,7 +50,7 @@ class TestIsSyncOriginated:
         git = MagicMock(spec=GitOps)
         git.commit_message.return_value = (
             "my regular commit\n\n"
-            "Repo-Sync-Origin: warpdotdev/warp-internal@spoofed"
+            "Repo-Sync-Origin: nrelab/cognix-internal@spoofed"
         )
 
         gh = MagicMock(spec=GhOps)
@@ -107,7 +107,7 @@ class TestIsSyncOriginated:
         git = MagicMock(spec=GitOps)
         git.commit_message.return_value = (
             "sync commit\n\n"
-            "Repo-Sync-Origin: warpdotdev/warp-internal@abc123"
+            "Repo-Sync-Origin: nrelab/cognix-internal@abc123"
         )
 
         gh = MagicMock(spec=GhOps)
@@ -123,7 +123,7 @@ class TestIsSyncOriginated:
         git = MagicMock(spec=GitOps)
         git.commit_message.return_value = (
             "sync from public\n\n"
-            "Repo-Sync-Origin: warpdotdev/warp-public@pub123"
+            "Repo-Sync-Origin: nrelab/cognix-public@pub123"
         )
 
         gh = MagicMock(spec=GhOps)

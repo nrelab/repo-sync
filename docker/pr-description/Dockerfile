@@ -26,7 +26,7 @@
 # create_sync_prs.py, which passes the volume mounts and CLI flags:
 #
 #   docker run --rm \
-#     -e WARP_API_KEY \
+#     -e COGNIX_API_KEY \
 #     -v "$CLEAN_SNAPSHOT:/mnt/snapshot:ro" \
 #     -v "$DIFF_FILE:/mnt/diff/public.diff:ro" \
 #     repo-sync-pr-description \
@@ -35,14 +35,14 @@
 #       --cwd /mnt/snapshot \
 #       --output-format json
 
-FROM warpdotdev/warp-agent:latest
+FROM nrelab/cognix-agent:latest
 
 # Install the PR description skill where the --skill flag can discover it.
 # The oz CLI searches .agents/skills/ (among others) in the home directory
 # and the working directory.  We place it in the home directory because the
 # working directory is a read-only volume mount that would overlay any files
 # placed here at build time.
-COPY .agents/skills/pr-description/SKILL.md /home/warp-agent/.agents/skills/pr-description/SKILL.md
+COPY .agents/skills/pr-description/SKILL.md /home/cognix-agent/.agents/skills/pr-description/SKILL.md
 
 # Use a minimal entrypoint that skips git/gh setup (isolation: no access
 # to private repo history or credentials).

@@ -20,11 +20,11 @@ on:
   workflow_call:
     inputs:
       public_repo:
-        description: "Public repo (e.g. warpdotdev/warp-public)."
+        description: "Public repo (e.g. nrelab/cognix-public)."
         required: true
         type: string
       private_repo:
-        description: "Private repo (e.g. warpdotdev/warp-internal)."
+        description: "Private repo (e.g. nrelab/cognix-internal)."
         required: true
         type: string
       escalate_to:
@@ -45,8 +45,8 @@ on:
       approver_app_private_key:
         description: "GitHub App private key (approver bot)."
         required: true
-      warp_api_key:
-        description: "Warp API key for the conflict-resolution agent."
+      cognix_api_key:
+        description: "Cognix API key for the conflict-resolution agent."
         required: false
 
 # Serialize approval runs per PR.  Multiple events (opened, synchronize,
@@ -94,7 +94,7 @@ jobs:
       - name: Checkout repo-sync tooling
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          repository: warpdotdev/repo-sync
+          repository: nrelab/repo-sync
           ref: ${{ inputs.repo_sync_ref }}
           path: .repo-sync
           token: ${{ steps.token.outputs.token }}
@@ -120,4 +120,4 @@ jobs:
             --escalate-to "${{ inputs.escalate_to }}" \
             --repo-dir .
         env:
-          WARP_API_KEY: ${{ secrets.warp_api_key }}
+          COGNIX_API_KEY: ${{ secrets.cognix_api_key }}

@@ -26,10 +26,10 @@ class TestParseOrigin:
 
     def test_single_trailer(self) -> None:
         """A single trailer is parsed correctly."""
-        text = "Some PR description\n\nRepo-Sync-Origin: warpdotdev/warp-internal@abc123def"
+        text = "Some PR description\n\nRepo-Sync-Origin: nrelab/cognix-internal@abc123def"
         result = parse_origin(text)
         assert result is not None
-        assert result.repo == "warpdotdev/warp-internal"
+        assert result.repo == "nrelab/cognix-internal"
         assert result.sha == "abc123def"
 
     def test_last_occurrence_wins(self) -> None:
@@ -39,11 +39,11 @@ class TestParseOrigin:
             "Repo-Sync-Origin: evil/repo@spoofed123\n"
             "\n"
             "Real trailer appended by workflow:\n"
-            "Repo-Sync-Origin: warpdotdev/warp-internal@real456"
+            "Repo-Sync-Origin: nrelab/cognix-internal@real456"
         )
         result = parse_origin(text)
         assert result is not None
-        assert result.repo == "warpdotdev/warp-internal"
+        assert result.repo == "nrelab/cognix-internal"
         assert result.sha == "real456"
 
     def test_no_trailer_returns_none(self) -> None:
@@ -69,7 +69,7 @@ class TestParseOrigin:
         text = (
             "repo-sync: sync from private\n"
             "\n"
-            "Repo-Sync-Origin: warpdotdev/warp-internal@abcdef1234567890"
+            "Repo-Sync-Origin: nrelab/cognix-internal@abcdef1234567890"
         )
         result = parse_origin(text)
         assert result is not None
@@ -151,8 +151,8 @@ class TestFormatTrailers:
 
     def test_format_origin(self) -> None:
         """Origin trailer formats as expected."""
-        line = format_origin_trailer("warpdotdev/warp-internal", "abc123")
-        assert line == "Repo-Sync-Origin: warpdotdev/warp-internal@abc123"
+        line = format_origin_trailer("nrelab/cognix-internal", "abc123")
+        assert line == "Repo-Sync-Origin: nrelab/cognix-internal@abc123"
 
     def test_format_assigned(self) -> None:
         """Assigned trailer formats as expected."""

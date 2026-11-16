@@ -35,7 +35,7 @@ class GhOps:
     """Encapsulates gh CLI operations so they can be replaced in tests."""
 
     def __init__(self, repo: str, token: str | None = None) -> None:
-        # Repo in owner/name format, e.g. "warpdotdev/warp-internal".
+        # Repo in owner/name format, e.g. "nrelab/cognix-internal".
         self.repo = repo
         self.token = token
 

@@ -119,10 +119,10 @@ the original "stateless" decision was correct for its context (snapshot generati
 **decision:** use `!repo-sync: private-start` and `!repo-sync: private-end` as the marker syntax.
 
 **alternatives considered:**
-1. **`!warp-internal: start`/`!warp-internal: end`** -- ties the marker to a specific repo name
+1. **`!cognix-internal: start`/`!cognix-internal: end`** -- ties the marker to a specific repo name
 2. **`!repo-sync: private-start`/`!repo-sync: private-end`** (chosen) -- namespaced to the tooling, with descriptive commands
 
-**justification:** `!repo-sync` as a namespace ties the markers to the tooling that consumes them, not a specific repo.  this makes the markers meaningful when adopted by other repos (e.g., `warp-proto-apis`).  `private-start`/`private-end` is more descriptive than bare `start`/`end`, and the namespaced format (`!repo-sync: <command>`) leaves room for future marker types if needed.
+**justification:** `!repo-sync` as a namespace ties the markers to the tooling that consumes them, not a specific repo.  this makes the markers meaningful when adopted by other repos (e.g., `cognix-proto-apis`).  `private-start`/`private-end` is more descriptive than bare `start`/`end`, and the namespaced format (`!repo-sync: <command>`) leaves room for future marker types if needed.
 
 ## `!repo-sync` marker nesting: allowed vs. error
 

@@ -2,7 +2,7 @@
 
 this repository provides reusable github workflows, actions, and tooling to synchronize code between a public repo and a private repo.  each repository integrates the reusable workflows defined here and configures them to sync with the other repository.
 
-initial consumers: `warp-internal` (private) and its public counterpart, with `warp-proto-apis` as a possible future consumer.
+initial consumers: `cognix-internal` (private) and its public counterpart, with `cognix-proto-apis` as a possible future consumer.
 
 see [DECISIONS.md](DECISIONS.md) for a log of design decisions, alternatives considered, and justifications.
 

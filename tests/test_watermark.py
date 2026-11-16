@@ -54,7 +54,7 @@ class TestReadWatermark:
     ) -> None:
         """Source SHA is recovered from the tagged commit's trailer."""
         # Create a commit with a Repo-Sync-Origin trailer (simulating a merged sync PR).
-        trailer = format_origin_trailer("warpdotdev/warp-internal", "abc123def456")
+        trailer = format_origin_trailer("nrelab/cognix-internal", "abc123def456")
         sha = make_commit(
             tmp_git_repo,
             "synced.txt",
@@ -67,7 +67,7 @@ class TestReadWatermark:
 
         result = read_watermark(tmp_git_repo, "private-to-public")
         assert result is not None
-        assert result.repo == "warpdotdev/warp-internal"
+        assert result.repo == "nrelab/cognix-internal"
         assert result.sha == "abc123def456"
 
     def test_watermark_without_trailer_raises(
@@ -91,7 +91,7 @@ class TestReadWatermark:
         after merge, but the watermark tag still points to the merge commit.
         """
         # Create a "merge commit" with the origin trailer.
-        trailer = format_origin_trailer("warpdotdev/warp-internal", "deadbeef")
+        trailer = format_origin_trailer("nrelab/cognix-internal", "deadbeef")
         merge_sha = make_commit(
             tmp_git_repo,
             "merged.txt",
@@ -119,7 +119,7 @@ class TestUpdateWatermark:
     def test_update_watermark(self, tmp_git_repo_pair: tuple[GitOps, GitOps]) -> None:
         """Watermark tag is created/updated and pushed to the remote."""
         source_git, _ = tmp_git_repo_pair
-        trailer = format_origin_trailer("warpdotdev/warp-internal", "newsha123")
+        trailer = format_origin_trailer("nrelab/cognix-internal", "newsha123")
         sha = make_commit(
             source_git,
             "synced.txt",

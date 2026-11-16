@@ -25,8 +25,8 @@ CONFLICT_RESOLUTION_IMAGE = os.environ.get(
 )
 
 # Git identity used by the conflict-resolution agent inside Docker.
-_GIT_USER_NAME = "warp-repo-sync[bot]"
-_GIT_USER_EMAIL = "270220925+warp-repo-sync[bot]@users.noreply.github.com"
+_GIT_USER_NAME = "cognix-repo-sync[bot]"
+_GIT_USER_EMAIL = "270220925+cognix-repo-sync[bot]@users.noreply.github.com"
 
 
 def run_conflict_resolution_agent(
@@ -52,7 +52,7 @@ def run_conflict_resolution_agent(
         proc = subprocess.Popen(
             [
                 "docker", "run", "--rm",
-                "-e", "WARP_API_KEY",
+                "-e", "COGNIX_API_KEY",
                 "-e", "GH_TOKEN",
                 "-e", f"GIT_USER_NAME={_GIT_USER_NAME}",
                 "-e", f"GIT_USER_EMAIL={_GIT_USER_EMAIL}",

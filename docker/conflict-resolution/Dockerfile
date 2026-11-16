@@ -8,7 +8,7 @@
 #   /mnt/repo          - The git repo with conflict markers to resolve.
 #
 # Expected environment variables:
-#   WARP_API_KEY       - Required.  API key for the LLM backend.
+#   COGNIX_API_KEY       - Required.  API key for the LLM backend.
 #   GIT_USER_NAME      - Optional.  Git identity for commits.
 #   GIT_USER_EMAIL     - Optional.  Git identity for commits.
 #   GH_TOKEN           - Optional.  GitHub token for API access.
@@ -18,7 +18,7 @@
 # agent.py:
 #
 #   docker run --rm \
-#     -e WARP_API_KEY \
+#     -e COGNIX_API_KEY \
 #     -e GH_TOKEN \
 #     -e GIT_USER_NAME \
 #     -e GIT_USER_EMAIL \
@@ -29,18 +29,18 @@
 #       --cwd /mnt/repo \
 #       --output-format json
 
-FROM warpdotdev/warp-agent:latest
+FROM nrelab/cognix-agent:latest
 
 # Install git.  The base image intentionally omits it (for isolation in
 # the PR description agent), but the conflict-resolution agent needs it
 # to stage files, finalize rebases/cherry-picks, and commit resolutions.
 USER root
 RUN apt-get update -qq && apt-get install -y -qq git > /dev/null 2>&1 && rm -rf /var/lib/apt/lists/*
-USER warp-agent
+USER cognix-agent
 
 # Install the conflict-resolution skill where the --skill flag can
 # discover it.
-COPY .agents/skills/conflict-resolution/SKILL.md /home/warp-agent/.agents/skills/conflict-resolution/SKILL.md
+COPY .agents/skills/conflict-resolution/SKILL.md /home/cognix-agent/.agents/skills/conflict-resolution/SKILL.md
 
 # Use an entrypoint that sets up git identity and credentials (unlike
 # pr-description, which skips git setup for isolation).
